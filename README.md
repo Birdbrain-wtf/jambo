@@ -6,6 +6,12 @@ It runs unmodified JAM service blobs, built with Parity's `jam-pvm-build`, on a 
 
 This is lab code. It holds no value and is connected to nothing live.
 
+## Part of Seeds
+
+minijam is the execution layer of [Seeds](https://github.com/Birdbrain-wtf/seeds), a membership design where people are admitted by the members who saw them take part, and where new KAB appears only when someone is admitted or a contribution holds up. The rules live in the Seeds chain's one pallet, [`chain/pallet`](https://github.com/Birdbrain-wtf/seeds/tree/main/chain/pallet), which runs today on a FRAME chain. minijam runs the same rules as JAM services, one job at a time, and the register here is the first: the admission step, before witnesses.
+
+Seeds' [layer table](https://github.com/Birdbrain-wtf/seeds#the-layers) shows where each piece sits, and its [`TRUST.md`](https://github.com/Birdbrain-wtf/seeds/blob/main/TRUST.md) says what each one is trusted with, this client included. Nothing in this repo restates either. When the two disagree, the pallet is right and this is behind.
+
 ## Run it
 
 ```bash
@@ -50,8 +56,10 @@ PolkaVM stays the default, so the client keeps running the same blobs as other J
 
 ## Next
 
-1. A members-only authoriser, so only a member's signature can get work onto a core.
-2. Two-witness admission: refine checks two existing members' signatures, accumulate applies the caps.
+Each step brings one more of the pallet's jobs across.
+
+1. A members-only authoriser, so only a member's signature can get work onto a core. The pallet's `OnlyMembers` gate.
+2. Two-witness admission: refine checks two existing members' signatures, accumulate applies the allowances and caps. The pallet's `witness`.
 3. Validators as separate processes on separate machines.
 4. The standard RISC-V backend.
 5. Running the JAM conformance vectors against the parts we kept.
