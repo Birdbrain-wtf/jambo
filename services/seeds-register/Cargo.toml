@@ -1,0 +1,13 @@
+[package]
+name = "seeds-register-service"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license = "Apache-2.0"
+authors = ["Birdbrain"]
+description = "Seeds register: one member, one record"
+
+[dependencies]
+jam-pvm-common = { version = "=0.1.28", default-features = false, features = ["service", "logging"] }
+jam-types = { version = "=0.1.28", default-features = false }
+polkavm-derive = "*"

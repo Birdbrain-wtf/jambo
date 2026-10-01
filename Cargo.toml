@@ -1,0 +1,20 @@
+[package]
+name = "minijam"
+version = "0.0.1"
+edition = "2021"
+license = "Apache-2.0"
+description = "A reduced JAM client: trusted validator set, one core, pluggable VM"
+authors = ["Birdbrain"]
+repository = "https://github.com/Birdbrain-wtf/minijam"
+
+[workspace]
+exclude = ["services"]
+
+[dependencies]
+polkavm = { version = "=0.30.0", default-features = false, features = ["std"] }
+jam-types = { version = "=0.1.28" }
+jam-program-blob-common = { version = "=0.1.28" }
+codec = { package = "jam-codec", version = "0.1.1", features = ["derive"] }
+blake2 = "0.10"
+ed25519-dalek = { version = "2", features = ["rand_core"] }
+hex = "0.4"
