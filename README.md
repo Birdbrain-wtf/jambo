@@ -1,0 +1,61 @@
+# minijam
+
+A reduced JAM client, written to answer one question: what is the smallest network that can run JAM services for a community that knows its own validators?
+
+It runs unmodified JAM service blobs, built with Parity's `jam-pvm-build`, on a chain that keeps only what that case needs. The example service in `services/seeds-register` is a membership register: a work item carries a community id and a member key, refine checks its shape, and accumulate records the member once and keeps a count.
+
+This is lab code. It holds no value and is connected to nothing live.
+
+## Run it
+
+```bash
+bash scripts/demo.sh                    # builds the client and the example service, then runs the demo
+bash scripts/demo.sh --validators 21    # any multiple of 3
+```
+
+The demo admits two members, resubmits one (the count stays at 2), sends a malformed entry, then takes validators offline. With up to a third offline, blocks keep finalising. One more and blocks are still produced but nothing finalises. When everyone returns, the missing validators replay what they missed and finality resumes. At every step it prints how many distinct state roots the online validators hold, which should always be 1.
+
+Building the service needs `rustup` with the `nightly-2025-05-10` toolchain. The script installs it and `jam-pvm-build` if they are missing.
+
+## What it keeps from JAM
+
+- **Services**, with refine and accumulate as separate entry points, using the same program blob format, entry points, argument encoding and host-call numbering as Parity's `polkajam`. A blob built for one runs on the other.
+- **Guarantees.** Each core has three guarantors, rotating every 4 slots. Two of them must refine a package on their own state, reach the same result and sign it before it can go into a block.
+- **Re-execution.** Every validator re-runs accumulate on its own copy of the state and votes only if it reaches the root in the header.
+
+## What it leaves out, on purpose
+
+| JAM | Here |
+| --- | --- |
+| Safrole block production with anonymous tickets | Round-robin authors from a named validator set |
+| GRANDPA finality | One round of signatures over the post-state. More than two thirds finalises the block and everything before it |
+| Fork choice | None. A known set with one author per slot does not fork unless a validator signs two blocks for one slot, which is not handled yet |
+| Erasure coding, data availability, audits | None. Guarantors are trusted to have kept the package |
+| Merkle state trie | One hash over the sorted state, enough for validators to agree and too little for light clients |
+| Networking | All validators run in one process for now |
+| Host calls | `gas`, `fetch`, `read`, `write`, `log`. Everything else returns WHAT |
+
+Each row is a choice that suits a small trusted network and has to be revisited before strangers can run a node.
+
+## The VM boundary
+
+Everything above `src/vm.rs` is independent of the VM. A backend gets a code blob, an entry point (refine or accumulate), an argument buffer and a gas budget. It calls back into the host through `Host::ecall` with a host-call id, at most six `u64` arguments and one `u64` return. That is the whole contract.
+
+There are two backends:
+
+- `pvm` (`src/pvm.rs`) runs JAM blobs on PolkaVM, Parity's RISC-V variant with its own encoding.
+- `riscv` (`src/riscv.rs`) is empty. It is where a standard RV64 interpreter goes, so services can be built with ordinary RISC-V toolchains. The file header describes the calling convention it should follow. Run it with `--vm riscv`.
+
+PolkaVM stays the default, so the client keeps running the same blobs as other JAM clients. Standard RISC-V comes in beside it as an option, not a replacement.
+
+## Next
+
+1. A members-only authoriser, so only a member's signature can get work onto a core.
+2. Two-witness admission: refine checks two existing members' signatures, accumulate applies the caps.
+3. Validators as separate processes on separate machines.
+4. The standard RISC-V backend.
+5. Running the JAM conformance vectors against the parts we kept.
+
+## Licence
+
+Apache-2.0. It depends on Parity's `polkavm`, `jam-types` and `jam-program-blob-common` crates, also Apache-2.0.
