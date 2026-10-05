@@ -1,4 +1,4 @@
-//! minijam: a reduced JAM client for Birdbrain Lab. See ../README.md.
+//! Jambo: a reduced JAM client for Birdbrain Lab. See ../README.md.
 
 mod chain;
 mod host;
@@ -54,7 +54,7 @@ fn agree(net: &Network) {
 fn main() {
 	let args: Vec<String> = std::env::args().collect();
 	let path = arg(&args, "--service")
-		.or_else(|| std::env::var("MINIJAM_SERVICE").ok())
+		.or_else(|| std::env::var("JAMBO_SERVICE").ok())
 		.unwrap_or("target/seeds-register-service.jam".into());
 	let n: usize = arg(&args, "--validators").and_then(|s| s.parse().ok()).unwrap_or(6);
 	let vm_name = arg(&args, "--vm").unwrap_or("pvm".into());
@@ -68,7 +68,7 @@ fn main() {
 	genesis.services.insert(SERVICE, Account { code, balance: 1 << 40, ..Default::default() });
 	let mut net = Network::new(n, genesis, vm);
 	println!(
-		"minijam: {n} validators, 1 core, vm={vm_name}, finality at {}/{n}, service #{SERVICE} from {path}",
+		"jambo: {n} validators, 1 core, vm={vm_name}, finality at {}/{n}, service #{SERVICE} from {path}",
 		net.threshold()
 	);
 

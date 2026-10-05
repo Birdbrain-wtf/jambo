@@ -1,4 +1,4 @@
-# minijam
+# Jambo
 
 A reduced JAM client, written to answer one question: what is the smallest network that can run JAM services for a community that knows its own validators?
 
@@ -8,7 +8,7 @@ This is lab code. It holds no value and is connected to nothing live.
 
 ## Part of Seeds
 
-minijam is the execution layer of [Seeds](https://github.com/Birdbrain-wtf/seeds), a membership design where people are admitted by the members who saw them take part, and where new KAB appears only when someone is admitted or a contribution holds up. The rules live in the Seeds chain's one pallet, [`chain/pallet`](https://github.com/Birdbrain-wtf/seeds/tree/main/chain/pallet), which runs today on a FRAME chain. minijam runs the same rules as JAM services, one job at a time, and the register here is the first: the admission step, before witnesses.
+Jambo is the execution layer of [Seeds](https://github.com/Birdbrain-wtf/seeds), a membership design where people are admitted by the members who saw them take part, and where new units appear only when a contribution holds up. Joining mints nothing. The rules live in the Seeds chain's one pallet, [`chain/pallet`](https://github.com/Birdbrain-wtf/seeds/tree/main/chain/pallet), which runs today on a FRAME chain. Jambo runs the same rules as JAM services, one job at a time, and the register here is the first: the admission step, before witnesses.
 
 Seeds' [layer table](https://github.com/Birdbrain-wtf/seeds#the-layers) shows where each piece sits, and its [`TRUST.md`](https://github.com/Birdbrain-wtf/seeds/blob/main/TRUST.md) says what each one is trusted with, this client included. Nothing in this repo restates either. When the two disagree, the pallet is right and this is behind.
 
