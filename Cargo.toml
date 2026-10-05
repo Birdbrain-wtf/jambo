@@ -1,11 +1,11 @@
 [package]
-name = "minijam"
+name = "jambo"
 version = "0.0.1"
 edition = "2021"
 license = "Apache-2.0"
 description = "A reduced JAM client: trusted validator set, one core, pluggable VM"
 authors = ["Birdbrain"]
-repository = "https://github.com/Birdbrain-wtf/minijam"
+repository = "https://github.com/Birdbrain-wtf/jambo"
 
 [workspace]
 exclude = ["services"]

@@ -89,7 +89,7 @@ pub struct Network {
 }
 
 fn key_for(i: usize) -> SigningKey {
-	SigningKey::from_bytes(&hash(format!("//minijam//validator//{i}").as_bytes()))
+	SigningKey::from_bytes(&hash(format!("//jambo//validator//{i}").as_bytes()))
 }
 
 fn report_msg(r: &WorkReport) -> Vec<u8> {
