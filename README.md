@@ -1,6 +1,6 @@
 # Jambo
 
-A reduced JAM client, written to answer one question: what is the smallest network that can run JAM services for a community that knows its own validators?
+A reduced JAM client, written to answer one question: what is the smallest network that can run JAM services when the validators are the community's own members, seated by membership rather than by stake? A validator is a key the chain knows, not a person it names.
 
 It runs unmodified JAM service blobs, built with Parity's `jam-pvm-build`, on a chain that keeps only what that case needs. The example service in `services/seeds-register` is a membership register: a work item carries a community id and a member key, refine checks its shape, and accumulate records the member once and keeps a count.
 
