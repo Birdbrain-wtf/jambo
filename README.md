@@ -54,6 +54,8 @@ There are two backends:
 
 PolkaVM stays the default, so the client keeps running the same blobs as other JAM clients. Standard RISC-V comes in beside it as an option, not a replacement.
 
+Why standard RISC-V: [Alley](https://alleyos.org), a base layer with no coin of its own, runs its programs on a virtual machine built on standard 64-bit RISC-V (RV64E). A standard backend here is the development direction for running the same membership rules on Alley as well as on JAM. It is not built yet, and nothing here runs on Alley today.
+
 ## Next
 
 Each step brings one more of the pallet's jobs across.
@@ -61,7 +63,7 @@ Each step brings one more of the pallet's jobs across.
 1. A members-only authoriser, so only a member's signature can get work onto a core. The pallet's `OnlyMembers` gate.
 2. Two-witness admission: refine checks two existing members' signatures, accumulate applies the allowances and caps. The pallet's `witness`.
 3. Validators as separate processes on separate machines.
-4. The standard RISC-V backend.
+4. The standard RISC-V backend, the route towards running on Alley.
 5. Running the JAM conformance vectors against the parts we kept.
 
 ## Licence
